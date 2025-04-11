@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {  useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Typography, Box, Paper, Container, Avatar, InputAdornment, IconButton, Alert, Snackbar } from '@mui/material';
@@ -22,6 +22,15 @@ function LoginPage() {
 
   const navigate = useNavigate();
 
+  //check if user is already logged in
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      alert('You are already logged in.');
+      navigate('/table');
+    }
+  }, [navigate]);
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -31,7 +40,7 @@ function LoginPage() {
     }
 
     try {
-      const res = await axios.post('http://127.0.0.1:5000/api/login', {
+      const res = await axios.post('http://127.0.0.1:5000/auth/login', {
         username,
         password,
       });
