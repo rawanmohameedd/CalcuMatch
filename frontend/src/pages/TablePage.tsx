@@ -1,6 +1,19 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {
+  Box,
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 function TablePage() {
   const [data, setData] = useState([]);
@@ -37,42 +50,58 @@ function TablePage() {
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Data Table</h2>
-      <button onClick={handleLogout}>Logout</button>
-      <table border={1} cellPadding={10} style={{ marginTop: 20 }}>
-        <thead>
-          <tr>
-            <th>Input</th>
-            <th>Existing Value</th>
-            <th>Percentage</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((row: {id: number, existing_value: string}) => {
-            const input = inputValues[row.id] || 0;
-            const percentage = row.existing_value
-              ? ((input / parseFloat(row.existing_value)) * 100).toFixed(2)
-              : '0.00';
-            return (
-              <tr key={row.id}>
-                <td>
-                  <input
-                    type="number"
-                    value={inputValues[row.id] || ''}
-                    onChange={(e) =>
-                      handleChange(row.id, parseFloat(e.target.value || '0'))
-                    }
-                  />
-                </td>
-                <td>{row.existing_value}</td>
-                <td>{percentage}%</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <Box p={4} sx={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '100vh',
+    }}>
+      <Paper elevation={3} sx={{ p: 3 }}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+          <Typography variant="h5">Data Table</Typography>
+          <Button variant="outlined" color="secondary" onClick={handleLogout}>
+            Logout
+          </Button>
+        </Box>
+
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Input</TableCell>
+                <TableCell>Existing Value</TableCell>
+                <TableCell>Percentage</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.map((row: {id: number, existing_value: number}) => {
+                const input = inputValues[row.id] || 0;
+                const percentage = row.existing_value
+                  ? ((input / row.existing_value) * 100).toFixed(2)
+                  : '0.00';
+
+                return (
+                  <TableRow key={row.id}>
+                    <TableCell>
+                      <TextField
+                        type="number"
+                        value={inputValues[row.id] || ''}
+                        onChange={(e) =>
+                          handleChange(row.id, parseFloat(e.target.value || '0'))
+                        }
+                        size="small"
+                      />
+                    </TableCell>
+                    <TableCell>{row.existing_value}</TableCell>
+                    <TableCell>{percentage}%</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </Box>
   );
 }
 
