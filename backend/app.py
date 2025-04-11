@@ -9,11 +9,11 @@ from jwt import ExpiredSignatureError, InvalidTokenError
 from dotenv import load_dotenv
 import os
 
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
-load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 engine = create_engine(os.getenv('DB_URI'))
 Base.metadata.create_all(engine)
