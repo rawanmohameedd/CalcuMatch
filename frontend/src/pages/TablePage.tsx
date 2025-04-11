@@ -12,8 +12,12 @@ import {
   TableHead,
   TableRow,
   TextField,
+  ThemeProvider,
   Typography,
 } from '@mui/material';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { theme } from '../styles/theme';
+import { AnimatedBackground } from '../styles/background';
 
 function TablePage() {
   const [data, setData] = useState([]);
@@ -50,6 +54,8 @@ function TablePage() {
   };
 
   return (
+    <ThemeProvider theme={theme}>
+      <AnimatedBackground/>
     <Box p={4} sx={{
       display: 'flex',
       alignItems: 'center',
@@ -59,9 +65,15 @@ function TablePage() {
       <Paper elevation={3} sx={{ p: 3 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography variant="h5">Data Table</Typography>
-          <Button variant="outlined" color="secondary" onClick={handleLogout}>
-            Logout
-          </Button>
+          <Button 
+                variant="contained" 
+                color="secondary" 
+                onClick={handleLogout}
+                startIcon={<LogoutIcon />}
+                sx={{ borderRadius: 2 }}
+              >
+                Logout
+              </Button>
         </Box>
 
         <TableContainer>
@@ -102,6 +114,7 @@ function TablePage() {
         </TableContainer>
       </Paper>
     </Box>
+    </ThemeProvider>
   );
 }
 

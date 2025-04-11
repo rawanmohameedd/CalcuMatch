@@ -4,18 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Typography, Box, Paper, Container, Avatar, InputAdornment, IconButton, Alert, Snackbar } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {  ThemeProvider } from '@mui/material/styles';
+import { theme } from '../styles/theme';
+import { AnimatedBackground } from '../styles/background';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#1976d2',
-    },
-    secondary: {
-      main: '#f50057',
-    },
-  },
-});
+
 
 function LoginPage() {
   const [username, setUsername] = useState('');
@@ -71,6 +64,7 @@ function LoginPage() {
 
   return (
     <ThemeProvider theme={theme}>
+      <AnimatedBackground />
       <Container
         component="main"
         maxWidth="xs">
@@ -183,6 +177,7 @@ function LoginPage() {
                 type="submit"
                 fullWidth
                 variant="contained"
+                color='secondary'
                 sx={{ mt: 3, mb: 2, py: 1.5, borderRadius: 2, fontWeight: 'bold' }}>
                 Sign In
               </Button>
