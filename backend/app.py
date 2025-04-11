@@ -6,15 +6,16 @@ from models import Base, Data
 import jwt
 import datetime
 from jwt import ExpiredSignatureError, InvalidTokenError
+from dotenv import load_dotenv
+import os
+
 
 app = Flask(__name__)
 CORS(app)
 
-# Secret key for JWT
-SECRET_KEY = 'your_super_secret_key'
-
-# Setup DB
-engine = create_engine('sqlite:///db.sqlite3')
+load_dotenv()
+SECRET_KEY = os.getenv('SECRET_KEY')
+engine = create_engine(os.getenv('DB_URI'))
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 
@@ -28,7 +29,7 @@ def login():
     if username == 'admin' and password == '123':
         payload = {
             'username': username,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=0.016)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         return jsonify({'status': 'success', 'token': token})
