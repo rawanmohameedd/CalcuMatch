@@ -46,7 +46,7 @@ project/
 └── backend/
     ├── app.py
     ├── models.py
-    ├── .env
+    └── .env
 ```
 
 ## Features
